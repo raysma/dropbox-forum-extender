@@ -1,0 +1,16 @@
+{
+  // Required
+  "name": "Dropbox Forum Extender",
+  "version": "2012.2",
+
+  // Recommended
+  "description": "Extends Dropbox Forums",
+
+  "content_scripts": [
+    {
+      "matches": ["https://forums.dropbox.com/*"],
+      "js": ["jquery.min.js", "dropbox_forum_extender.user.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
