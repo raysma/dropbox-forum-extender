@@ -2,6 +2,7 @@
 // @name          Dropbox Forum Extender
 // @namespace     IdeativeSoftware.Dropbox
 // @description   Extends Dropbox Forums with quoting
+// @version       1.0
 // @include       https://forums.dropbox.com/*
 // @require       //ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js
 // @grant		  none
@@ -64,7 +65,7 @@ function AddBreadcrumb() {
 function AddPrerequisites() {
 	$("head").append("<style type=\"text/css\" charset=\"utf-8\">#gsDropboxExtender-anchor-popup {	display:none;	position:fixed;	_position:absolute;	 /* hack for internet explorer 6*/height:200px;	width:408px;	background:#FFFFFF;	border:2px solid #cecece;	z-index:2;	padding:12px;	font-size:13px;}#gsDropboxExtender-listbox-popup {	display:none;	position:fixed;	_position:absolute;	 /* hack for internet explorer 6*/height:200px;	width:408px;	background:#FFFFFF;	border:2px solid #cecece;	z-index:2;	padding:12px;	font-size:13px;}#gsDropboxExtender-anchor-popup h1, #gsDropboxExtender-listbox-popup h1 {	text-align:left;	color:#6FA5FD;	font-size:22px;	font-weight:700;	border-bottom:1px dotted #D3D3D3;	padding-bottom:2px;	margin-bottom:20px;} .gsDropboxExtenderPopupClose:hover { 	cursor: pointer;} .gsDropboxExtenderPopupClose {	font-size:14px;	line-height:14px;	right:6px;	top:4px;	position:absolute;	color:#6fa5fd;	font-weight:700;	display:block;}#gsDropboxExtender-listbox-unordered, #gsDropboxExtender-listbox-ordered {	margin-left: 20px;}</style>");
 	$('body').append('<div id="gsDropboxExtender-anchor-popup"><a id="gsDropboxExtenderAnchorClose" class="gsDropboxExtenderPopupClose">x</a><h1>Add Link</h1><br /><br /><div><div style="clear: both; height: 20px;"><label style="float: left;">Title: </label><input id="gsDropboxExtenderAnchorTextBox" class="textinput" type="text" maxlength="500" size="100" style="height: 16px; float: right; width: 300px;" /></div><div style="clear: both; height: 20px;"><label style="float: left;">Url: </label><input id="gsDropboxExtenderAnchorUrlBox" class="textinput" type="text" maxlength="500" size="100" style="height: 16px; float: right; width: 300px;" /></div><br /><input type="submit" tabindex="4" value="Add Link" class="button" name="Submit" id="gsDropboxExtenderAnchorAddLink" style="clear: both; float: right;"></div>');
-	$('body').append('<div id="gsDropboxExtender-screen-overlay" style="display:none; position:fixed; height:100%; width:100%;  top:0;   left:0;  background:#000000;  border:1px solid #cecece;  z-index:1; opacity: 0.7;"> </div>'); 
+	$('body').append('<div id="gsDropboxExtender-screen-overlay" style="display:none; position:fixed; height:100%; width:100%;  top:0;   left:0;  background:#000000;  border:1px solid #cecece;  z-index:1; opacity: 0.7;"> </div>');
 	$('body').append('<div id="gsDropboxExtender-listbox-popup"><a id="gsDropboxExtenderListBoxClose" class="gsDropboxExtenderPopupClose">x</a><h1>Add List</h1><div><ul id="gsDropboxExtender-listbox-unordered"></ul><ol id="gsDropboxExtender-listbox-ordered"></ol><br /></div><div><div style="clear: both; height: 20px;"><label style="float: left;">Item: </label><input id="gsDropboxExtenderListBoxTextBox" class="textinput" type="text" maxlength="500" size="100" style="height: 16px; float: right; width: 300px;" /></div><br /><input type="submit" tabindex="4" value="Add Item" class="button" name="Submit" id="gsDropboxExtenderListBoxAddItem" style="clear: both; float: right;"><br /><br /><input type="submit" tabindex="4" value="Ok" class="button" name="Submit" id="gsDropboxExtenderListBoxOk" style="clear: both; float: right;"></div>');
 }
 
@@ -108,11 +109,11 @@ jQuery('.gsDropboxExtenderOrderedListInsert').live('click', function(evt) {
 	ShowListBoxPopUp("ORDERED");
 });
 
-jQuery('#gsDropboxExtenderListBoxClose').live('click',function(){  
-	HideListBoxPopUp(); 
-}); 
+jQuery('#gsDropboxExtenderListBoxClose').live('click',function(){
+	HideListBoxPopUp();
+});
 
-jQuery('#gsDropboxExtenderListBoxAddItem').live('click',function(){ 
+jQuery('#gsDropboxExtenderListBoxAddItem').live('click',function(){
 	if($('#gsDropboxExtenderListBoxTextBox').val().length == 0) {
 		return;
 	}
@@ -131,7 +132,7 @@ jQuery('#gsDropboxExtenderListBoxAddItem').live('click',function(){
 
 	// Increase the popups size
 	$("#gsDropboxExtender-listbox-popup").height($("#gsDropboxExtender-listbox-popup").height() + 20);
-}); 
+});
 
 // Insert an ordered list
 jQuery('#gsDropboxExtenderListBoxOk').live('click', function(evt) {
@@ -154,7 +155,7 @@ jQuery('#gsDropboxExtenderListBoxOk').live('click', function(evt) {
 		SetCursorPositionInTextArea(PostTextAreaName, CursorStartPosition + $(Contents).html().length + 11 );
 	}
 
-	HideListBoxPopUp(); 
+	HideListBoxPopUp();
 
 });
 
@@ -164,12 +165,12 @@ jQuery('.gsDropboxExtenderAnchorSelected').live('click', function(evt) {
 });
 
 jQuery('#gsDropboxExtenderAnchorClose').live('click',function(){
-	HideAnchorPopUp(); 
-});  
+	HideAnchorPopUp();
+});
 
 jQuery('#gsDropboxExtenderAnchorAddLink').live('click',function(){
 	HideAnchorPopUp();
-	
+
 	InsertTextAtCursorPosition("<a href='" + $('#gsDropboxExtenderAnchorUrlBox').val() + "'>" + $('#gsDropboxExtenderAnchorTextBox').val() + "</a>");
 });
 
@@ -191,45 +192,45 @@ function ShowListBoxPopUp(_ListType) {
 	$('ol#gsDropboxExtender-listbox-unordered').empty();
 	$('#gsDropboxExtenderListBoxTextBox').val("");
 
-	var windowWidth = document.documentElement.clientWidth;  
-	var windowHeight = document.documentElement.clientHeight;  
-	var popupHeight = $("#gsDropboxExtender-listbox-popup").height();  
-	var popupWidth = $("#gsDropboxExtender-listbox-popup").width();  
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#gsDropboxExtender-listbox-popup").height();
+	var popupWidth = $("#gsDropboxExtender-listbox-popup").width();
 
-	$("#gsDropboxExtender-listbox-popup").css({  
-		"position": "fixed",  
-		"top": windowHeight/2-popupHeight/2,  
-		"left": windowWidth/2-popupWidth/2  
-	});  
+	$("#gsDropboxExtender-listbox-popup").css({
+		"position": "fixed",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
 
-	$("#gsDropboxExtender-screen-overlay").show();  
-	$("#gsDropboxExtender-listbox-popup").show();  
+	$("#gsDropboxExtender-screen-overlay").show();
+	$("#gsDropboxExtender-listbox-popup").show();
 }
 
 function HideListBoxPopUp() {
-	$("#gsDropboxExtender-screen-overlay").hide();  
-	$("#gsDropboxExtender-listbox-popup").hide(); 
+	$("#gsDropboxExtender-screen-overlay").hide();
+	$("#gsDropboxExtender-listbox-popup").hide();
 }
 
 function ShowAnchorPopUp() {
-	var windowWidth = document.documentElement.clientWidth;  
-	var windowHeight = document.documentElement.clientHeight;  
-	var popupHeight = $("#gsDropboxExtender-anchor-popup").height();  
-	var popupWidth = $("#gsDropboxExtender-anchor-popup").width();  
+	var windowWidth = document.documentElement.clientWidth;
+	var windowHeight = document.documentElement.clientHeight;
+	var popupHeight = $("#gsDropboxExtender-anchor-popup").height();
+	var popupWidth = $("#gsDropboxExtender-anchor-popup").width();
 
-	$("#gsDropboxExtender-anchor-popup").css({  
-		"position": "fixed",  
-		"top": windowHeight/2-popupHeight/2,  
-		"left": windowWidth/2-popupWidth/2  
-	});  
+	$("#gsDropboxExtender-anchor-popup").css({
+		"position": "fixed",
+		"top": windowHeight/2-popupHeight/2,
+		"left": windowWidth/2-popupWidth/2
+	});
 
-	$("#gsDropboxExtender-screen-overlay").show();  
+	$("#gsDropboxExtender-screen-overlay").show();
 	$("#gsDropboxExtender-anchor-popup").show();
 }
 
 function HideAnchorPopUp() {
-	$("#gsDropboxExtender-screen-overlay").hide();  
-	$("#gsDropboxExtender-anchor-popup").hide(); 
+	$("#gsDropboxExtender-screen-overlay").hide();
+	$("#gsDropboxExtender-anchor-popup").hide();
 }
 
 /************************************************/
@@ -242,7 +243,7 @@ $('table#latest').each(function(evt) {
 	$(this).find('tr').each(function(evt) {
 		var PostCountCell = $(this).find('td').eq(1);
 		var PostUrl = $(this).find('td').eq(0).find('a').eq(0).attr('href');
-		
+
 		if ($(PostCountCell).html() != null)
 		{
 			var PostCount = $(PostCountCell).text();
@@ -255,7 +256,7 @@ $('table#latest').each(function(evt) {
 				$(PostCountCell).html("<a href='" + PostUrl + "#latest'>" + $(PostCountCell).text() + "</a>");
 			}
 		}
-		
+
 	});
 });
 
@@ -355,7 +356,7 @@ function InsertAndMarkupTextAtCursorPosition(Wrapper) {
 	{
 		SetCursorPositionInTextArea(PostTextAreaName, EndCursorPosition);
 	}
-	
+
 }
 
 // Insert some text at the required position
@@ -366,7 +367,7 @@ function InsertTextAtCursorPosition(TextToBeInserted)
 
 	$('#' + PostTextAreaName).val(
 		$('#' + PostTextAreaName).val().substring(0, SelectedTextStart) + TextToBeInserted + $('#' + PostTextAreaName).val().substring(SelectedTextEnd)
-	); 
+	);
 }
 
 // Move the cursor position to set character in text area
